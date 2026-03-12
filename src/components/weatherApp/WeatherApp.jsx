@@ -1,32 +1,32 @@
 import React, { useState } from 'react';
 import './WeaterApp.css';
-import search_icon  from '../assets/search.png';
-import clear_icon   from '../assets/clear.png';
-import cloud_icon   from '../assets/clound.png';
+import search_icon from '../assets/search.png';
+import clear_icon from '../assets/clear.png';
+import cloud_icon from '../assets/clound.png';
 import drizzle_icon from '../assets/drizzle.avif';
-import rain_icon    from '../assets/rain.png';
-import snow_icon    from '../assets/snow.jpg';
-import wind_icon    from '../assets/wind.png';
+import rain_icon from '../assets/rain.png';
+import snow_icon from '../assets/snow.jpg';
+import wind_icon from '../assets/wind.png';
 import humidity_icon from '../assets/humidity.png';
 
 const API_KEY = 'c3eff91f5ec115b2c5761c29a8dc5a6d';
 
 const ICON_MAP = {
-  '01d': clear_icon,   '01n': clear_icon,
-  '02d': cloud_icon,   '02n': cloud_icon,
+  '01d': clear_icon, '01n': clear_icon,
+  '02d': cloud_icon, '02n': cloud_icon,
   '03d': drizzle_icon, '03n': drizzle_icon,
-  '04d': cloud_icon,   '04n': cloud_icon,
-  '09d': rain_icon,    '09n': rain_icon,
-  '10d': rain_icon,    '10n': rain_icon,
-  '13d': snow_icon,    '13n': snow_icon,
+  '04d': cloud_icon, '04n': cloud_icon,
+  '09d': rain_icon, '09n': rain_icon,
+  '10d': rain_icon, '10n': rain_icon,
+  '13d': snow_icon, '13n': snow_icon,
 };
 
 function WeatherApp() {
-  const [city, setCity]            = useState('');
-  const [weather, setWeather]      = useState(null);
-  const [wIcon, setWIcon]          = useState(clear_icon);
-  const [loading, setLoading]      = useState(false);
-  const [error, setError]          = useState('');
+  const [city, setCity] = useState('kannur');
+  const [weather, setWeather] = useState(null);
+  const [wIcon, setWIcon] = useState(clear_icon);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const search = async () => {
     const q = city.trim();
@@ -37,21 +37,21 @@ function WeatherApp() {
 
     try {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(q)}&units=metric&appid=${API_KEY}`;
-      const res  = await fetch(url);
+      const res = await fetch(url);
       const data = await res.json();
 
       if (data.cod !== 200) {
-        setError('City not found. Please try again.');
+        setError('City not found. Please try again..');
         setLoading(false);
         return;
       }
 
       setWeather({
-        temp:        Math.round(data.main.temp),
-        feelsLike:   Math.round(data.main.feels_like),
-        humidity:    data.main.humidity,
-        windSpeed:   Math.round(data.wind.speed),
-        location:    data.name + (data.sys?.country ? `, ${data.sys.country}` : ''),
+        temp: Math.round(data.main.temp),
+        feelsLike: Math.round(data.main.feels_like),
+        humidity: data.main.humidity,
+        windSpeed: Math.round(data.wind.speed),
+        location: data.name + (data.sys?.country ? `, ${data.sys.country}` : ''),
         description: data.weather[0]?.description ?? '',
       });
 
@@ -88,7 +88,7 @@ function WeatherApp() {
 
       {/* ── Status messages ─────────────── */}
       {loading && <p className="loading-msg">Fetching weather…</p>}
-      {error   && <p className="status-msg">{error}</p>}
+      {error && <p className="status-msg">{error}</p>}
 
       {/* ── Weather Display ──────────────── */}
       <div className="weather-image">
